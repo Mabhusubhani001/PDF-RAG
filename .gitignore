@@ -26,23 +26,7 @@ pdf-rag/.astro/
 dist/
 pdf-rag/dist/
 
-# AI Agent Configuration & Meta Files
-.claude/
-.kilocode/
-.agents/
-.gemini/
-.brain/
-skills-lock.json
-AGENTS.md
-CLAUDE.md
-DESIGN.md
-GEMINI.md
-DEPLOYMENT.md
-pdf-rag/AGENTS.md
-pdf-rag/CLAUDE.md
-pdf-rag/DESIGN.md
-pdf-rag/GEMINI.md
-pdf-rag/skills-lock.json
+
 
 # IDE & OS Files
 .DS_Store
