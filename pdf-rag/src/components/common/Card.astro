@@ -1,0 +1,19 @@
+---
+interface Props {
+  hoverable?: boolean;
+  class?: string;
+  id?: string;
+  [key: string]: any;
+}
+
+const { hoverable = true, class: className = '', id, ...rest } = Astro.props;
+
+const baseStyles = "bg-[#191919] border border-[#212327] rounded-lg p-6 relative overflow-hidden";
+const hoverStyles = hoverable ? "transition-all duration-200 hover:border-white/20 hover:shadow-2xl hover:shadow-black/50" : "";
+
+const combinedClasses = `${baseStyles} ${hoverStyles} ${className}`;
+---
+
+<div class={combinedClasses} id={id} {...rest}>
+  <slot />
+</div>

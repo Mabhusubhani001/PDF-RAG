@@ -1,0 +1,26 @@
+# Environment Variables & Secrets
+.env
+.env.local
+*.env
+
+# Build & Dependencies
+node_modules/
+.astro/
+dist/
+
+# AI Agent Folders & Meta Files
+.claude/
+.kilocode/
+.agents/
+.gemini/
+.brain/
+skills-lock.json
+AGENTS.md
+CLAUDE.md
+DESIGN.md
+GEMINI.md
+
+# IDE & OS
+.DS_Store
+Thumbs.db
+.vscode/

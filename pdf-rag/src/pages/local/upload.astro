@@ -1,0 +1,302 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionEyebrow from '../../components/common/SectionEyebrow.astro';
+import Card from '../../components/common/Card.astro';
+import ButtonPill from '../../components/common/ButtonPill.astro';
+---
+
+<Layout 
+  title="Upload PDF Document | Local RAG Pipeline"
+  description="Select or drag and drop a PDF document to begin the local vector embedding and indexing process."
+>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+    <!-- Header -->
+    <div class="space-y-3 text-center max-w-2xl mx-auto">
+      <SectionEyebrow text="LOCAL PIPELINE // STEP 01" class="justify-center" />
+      <h1 class="heading-display-md text-white">Upload Your PDF Document</h1>
+      <p class="text-sm text-zinc-400">
+        Choose a PDF document to ingest into your local Qdrant collection. All files are parsed locally on your device.
+      </p>
+    </div>
+
+    <!-- Dropzone Card -->
+    <Card class="p-8 sm:p-12 border-2 border-dashed border-[#333740] bg-[#141416] hover:border-amber-500/50 transition-all duration-300 relative" id="dropzone-card">
+      <input 
+        type="file" 
+        id="pdf-file-input" 
+        accept="application/pdf" 
+        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" 
+        aria-label="Upload PDF document input"
+      />
+
+      <!-- Initial Empty State -->
+      <div class="text-center space-y-6 flex flex-col items-center justify-center py-6" id="empty-state">
+        <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
+          <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+          </svg>
+        </div>
+
+        <div class="space-y-2 max-w-sm">
+          <h3 class="text-xl font-medium text-white">Drag & drop your PDF here</h3>
+          <p class="text-xs text-zinc-400">or click to browse from your computer</p>
+        </div>
+
+        <div class="flex items-center gap-3 text-[11px] font-mono text-zinc-500">
+          <span class="px-2.5 py-1 rounded bg-black/40 border border-white/5">Supports .pdf</span>
+          <span class="px-2.5 py-1 rounded bg-black/40 border border-white/5">Max 50 MB</span>
+          <span class="px-2.5 py-1 rounded bg-black/40 border border-white/5">100% Private</span>
+        </div>
+      </div>
+
+      <!-- Selected File State (Hidden by default) -->
+      <div class="hidden space-y-6" id="selected-file-state">
+        <div class="flex items-start justify-between p-4 rounded-lg bg-black/50 border border-amber-500/30">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-mono font-bold text-sm border border-amber-500/40">
+              PDF
+            </div>
+            <div>
+              <h4 class="text-base font-medium text-white truncate max-w-md" id="file-name-display">
+                document.pdf
+              </h4>
+              <div class="flex items-center gap-3 text-xs text-zinc-400 font-mono mt-0.5">
+                <span id="file-size-display">0 KB</span>
+                <span>•</span>
+                <span id="file-pages-display">Est. ~1 Page</span>
+                <span>•</span>
+                <span id="file-chunks-display">Est. ~2 Chunks</span>
+              </div>
+            </div>
+          </div>
+
+          <button 
+            type="button" 
+            id="btn-remove-file"
+            class="z-30 text-xs font-mono text-zinc-400 hover:text-rose-400 p-2 rounded hover:bg-white/5 transition-colors"
+          >
+            Remove ✕
+          </button>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-mono">
+            <span class="text-zinc-400" id="progress-status-text">Ready to transmit to local RAG backend...</span>
+            <span class="text-amber-400" id="progress-percent-text">100% Ready</span>
+          </div>
+          <div class="w-full h-2 rounded-full bg-black/60 overflow-hidden border border-white/10">
+            <div class="h-full bg-gradient-to-r from-amber-500 to-amber-300 w-full transition-all duration-300" id="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Preset Demo PDF Selection -->
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <SectionEyebrow text="OR TRY A SAMPLE EDUCATIONAL PDF" />
+        <span class="text-xs text-zinc-500 font-mono">Pre-loaded Samples</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Sample 1 -->
+        <button 
+          type="button" 
+          class="sample-pdf-btn text-left p-4 rounded-lg bg-[#18181a] border border-[#212327] hover:border-amber-500/40 hover:bg-[#1f1e1a] transition-all group"
+          data-filename="Attention_Is_All_You_Need_Transformer_Paper.pdf"
+          data-size="2.1 MB"
+          data-pages="15 Pages"
+          data-chunks="38 Chunks"
+        >
+          <div class="flex items-start justify-between">
+            <div class="space-y-1">
+              <h4 class="text-sm font-medium text-white group-hover:text-amber-300 transition-colors">
+                Attention Is All You Need (Transformer Paper)
+              </h4>
+              <p class="text-xs text-zinc-400">The seminal 2017 research paper introducing Transformer self-attention architecture.</p>
+            </div>
+            <span class="text-xs font-mono text-amber-400 shrink-0 ml-2">Select →</span>
+          </div>
+        </button>
+
+        <!-- Sample 2 -->
+        <button 
+          type="button" 
+          class="sample-pdf-btn text-left p-4 rounded-lg bg-[#18181a] border border-[#212327] hover:border-amber-500/40 hover:bg-[#1f1e1a] transition-all group"
+          data-filename="RAG_Survey_Comprehensive_Architecture_Guide.pdf"
+          data-size="3.8 MB"
+          data-pages="24 Pages"
+          data-chunks="64 Chunks"
+        >
+          <div class="flex items-start justify-between">
+            <div class="space-y-1">
+              <h4 class="text-sm font-medium text-white group-hover:text-amber-300 transition-colors">
+                Retrieval Augmented Generation Survey
+              </h4>
+              <p class="text-xs text-zinc-400">Deep survey of RAG methods, vector indices, and chunking optimization.</p>
+            </div>
+            <span class="text-xs font-mono text-amber-400 shrink-0 ml-2">Select →</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="flex items-center justify-between pt-6 border-t border-[#212327]">
+      <ButtonPill href="/local" variant="ghost" size="md">
+        ← Back to Setup
+      </ButtonPill>
+
+      <button 
+        type="button" 
+        id="btn-start-pipeline" 
+        class="pill-button-primary text-sm px-6 py-2.5 opacity-50 pointer-events-none transition-all flex items-center gap-2"
+      >
+        <span id="btn-start-text">Start 9-Stage RAG Pipeline</span>
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { uploadPdfDocument } from '../../utils/api';
+
+  const fileInput = document.getElementById('pdf-file-input') as HTMLInputElement;
+  const emptyState = document.getElementById('empty-state');
+  const selectedState = document.getElementById('selected-file-state');
+  const fileNameDisplay = document.getElementById('file-name-display');
+  const fileSizeDisplay = document.getElementById('file-size-display');
+  const filePagesDisplay = document.getElementById('file-pages-display');
+  const fileChunksDisplay = document.getElementById('file-chunks-display');
+  const btnRemove = document.getElementById('btn-remove-file');
+  const btnStartPipeline = document.getElementById('btn-start-pipeline') as HTMLButtonElement;
+  const btnStartText = document.getElementById('btn-start-text');
+  const sampleBtns = document.querySelectorAll('.sample-pdf-btn');
+
+  let currentSelectedFile: File | null = null;
+  let currentSampleData: { filename: string; pages: string; chunks: string; size: string } | null = null;
+
+  function selectFileObject(file: File) {
+    currentSelectedFile = file;
+    currentSampleData = null;
+
+    const sizeMb = file.size < 1024 * 1024 
+      ? `${(file.size / 1024).toFixed(1)} KB` 
+      : `${(file.size / (1024 * 1024)).toFixed(1)} MB`;
+
+    // Accurate page & chunk estimation based on file size
+    const estPages = Math.max(1, Math.round(file.size / 30000));
+    const estChunks = Math.max(2, Math.round(file.size / 8000));
+
+    if (emptyState && selectedState && fileNameDisplay && fileSizeDisplay && filePagesDisplay && fileChunksDisplay && btnStartPipeline) {
+      fileNameDisplay.textContent = file.name;
+      fileSizeDisplay.textContent = sizeMb;
+      filePagesDisplay.textContent = `Est. ~${estPages} Page${estPages > 1 ? 's' : ''}`;
+      fileChunksDisplay.textContent = `Est. ~${estChunks} Chunk${estChunks > 1 ? 's' : ''}`;
+
+      emptyState.classList.add('hidden');
+      selectedState.classList.remove('hidden');
+
+      btnStartPipeline.classList.remove('opacity-50', 'pointer-events-none');
+    }
+  }
+
+  function selectSamplePdf(filename: string, size: string, pages: string, chunks: string) {
+    currentSelectedFile = null;
+    currentSampleData = { filename, size, pages, chunks };
+
+    if (emptyState && selectedState && fileNameDisplay && fileSizeDisplay && filePagesDisplay && fileChunksDisplay && btnStartPipeline) {
+      fileNameDisplay.textContent = filename;
+      fileSizeDisplay.textContent = size;
+      filePagesDisplay.textContent = pages;
+      fileChunksDisplay.textContent = chunks;
+
+      emptyState.classList.add('hidden');
+      selectedState.classList.remove('hidden');
+
+      btnStartPipeline.classList.remove('opacity-50', 'pointer-events-none');
+    }
+  }
+
+  function clearFile() {
+    currentSelectedFile = null;
+    currentSampleData = null;
+
+    if (emptyState && selectedState && btnStartPipeline && fileInput) {
+      fileInput.value = '';
+      selectedState.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+      btnStartPipeline.classList.add('opacity-50', 'pointer-events-none');
+    }
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener('change', (e) => {
+      const files = (e.target as HTMLInputElement).files;
+      if (files && files.length > 0) {
+        selectFileObject(files[0]);
+      }
+    });
+  }
+
+  if (btnRemove) {
+    btnRemove.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearFile();
+    });
+  }
+
+  sampleBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filename = btn.getAttribute('data-filename') || 'sample.pdf';
+      const size = btn.getAttribute('data-size') || '2.0 MB';
+      const pages = btn.getAttribute('data-pages') || '15 Pages';
+      const chunks = btn.getAttribute('data-chunks') || '38 Chunks';
+      selectSamplePdf(filename, size, pages, chunks);
+    });
+  });
+
+  if (btnStartPipeline) {
+    btnStartPipeline.addEventListener('click', async () => {
+      if (btnStartText) btnStartText.textContent = 'Uploading to Local Backend...';
+      btnStartPipeline.classList.add('opacity-70', 'pointer-events-none');
+
+      let filename = 'document.pdf';
+      let pagesCount = '1 Page';
+      let chunksCount = '2 Chunks';
+
+      if (currentSelectedFile) {
+        filename = currentSelectedFile.name;
+        // Post actual PDF file to backend REST endpoint
+        const uploadRes = await uploadPdfDocument(currentSelectedFile, 'local');
+        if (uploadRes) {
+          pagesCount = `${uploadRes.metadata.estimated_pages} Page${uploadRes.metadata.estimated_pages > 1 ? 's' : ''}`;
+          chunksCount = `${uploadRes.metadata.estimated_chunks} Chunk${uploadRes.metadata.estimated_chunks > 1 ? 's' : ''}`;
+          sessionStorage.setItem('current_job_id', uploadRes.job_id);
+        } else {
+          // Client estimation fallback
+          const estPages = Math.max(1, Math.round(currentSelectedFile.size / 30000));
+          const estChunks = Math.max(2, Math.round(currentSelectedFile.size / 8000));
+          pagesCount = `${estPages} Page${estPages > 1 ? 's' : ''}`;
+          chunksCount = `${estChunks} Chunk${estChunks > 1 ? 's' : ''}`;
+        }
+      } else if (currentSampleData) {
+        filename = currentSampleData.filename;
+        pagesCount = currentSampleData.pages;
+        chunksCount = currentSampleData.chunks;
+      }
+
+      // Save document info to sessionStorage so processing and chat display actual PDF details!
+      sessionStorage.setItem('active_pdf_name', filename);
+      sessionStorage.setItem('active_pdf_pages', pagesCount);
+      sessionStorage.setItem('active_pdf_chunks', chunksCount);
+
+      // Navigate to processing pipeline page
+      window.location.href = '/local/processing';
+    });
+  }
+</script>

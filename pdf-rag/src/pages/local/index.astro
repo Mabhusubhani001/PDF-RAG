@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionEyebrow from '../../components/common/SectionEyebrow.astro';
+import TechExplainer from '../../components/local/TechExplainer.astro';
+import HardwareRequirements from '../../components/local/HardwareRequirements.astro';
+import DockerVolumeInfo from '../../components/local/DockerVolumeInfo.astro';
+import EnvStatusSection from '../../components/local/EnvStatusSection.astro';
+---
+
+<Layout 
+  title="Local AI Architecture & Environment | PDF RAG Playground"
+  description="Educational guide to Ollama, Docker Desktop, Qdrant Vector DB, Llama 3.1, Qwen embeddings, hardware requirements, and environment readiness checks."
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+    <!-- Page Hero Header -->
+    <div class="space-y-4 max-w-4xl">
+      <SectionEyebrow text="LOCAL AI PIPELINE // OLLAMA & QDRANT" />
+      <h1 class="heading-display-lg text-white">
+        On-Device Private RAG Architecture
+      </h1>
+      <p class="text-base md:text-lg text-zinc-400 font-normal leading-relaxed">
+        Understand how Ollama, Docker, and Qdrant combine to run a 100% local, zero-cloud RAG pipeline on your machine.
+      </p>
+    </div>
+
+    <!-- Section 1: Core Tech Explainer & Models -->
+    <TechExplainer />
+
+    <!-- Section 2: Hardware Requirements & Disk Space Allocation -->
+    <HardwareRequirements />
+
+    <!-- Section 3: Docker Containers & Volume Mounts -->
+    <DockerVolumeInfo />
+
+    <!-- Section 4: Live Environment Readiness Checks -->
+    <EnvStatusSection />
+  </div>
+</Layout>

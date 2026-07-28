@@ -1,0 +1,58 @@
+---
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "PDF RAG Playground | Educational & Visual RAG Sandbox",
+  description = "Learn Retrieval Augmented Generation (RAG) by interacting with PDF documents using Local AI (Ollama + Qdrant) or Cloud AI (Gemini + Qdrant Cloud)."
+} = Astro.props;
+---
+
+<!usr/bin/env html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+
+    <!-- Google Fonts: Inter & Geist Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" 
+      rel="stylesheet" 
+    />
+  </head>
+  <body class="bg-[#0a0a0a] text-[#dadbdf] min-h-screen flex flex-col selection:bg-white selection:text-black">
+    <!-- Accessibility Skip Link -->
+    <a 
+      href="#main-content" 
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-white text-black px-4 py-2 rounded-full font-mono text-xs z-50 focus:outline-none"
+    >
+      Skip to content
+    </a>
+
+    <!-- Header Navbar -->
+    <Header />
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <Footer />
+  </body>
+</html>

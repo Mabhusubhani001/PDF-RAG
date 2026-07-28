@@ -1,0 +1,112 @@
+---
+import Card from '../common/Card.astro';
+import SectionEyebrow from '../common/SectionEyebrow.astro';
+---
+
+<section class="space-y-8">
+  <div class="space-y-2">
+    <SectionEyebrow text="SYSTEM RESOURCES & DISK ALLOCATION" />
+    <h2 class="heading-display-md text-white">Hardware Requirements & Storage Breakdown</h2>
+    <p class="text-sm text-zinc-400 max-w-3xl">
+      Local AI workloads demand RAM, CPU/GPU compute, and disk space. Here is how system resources are utilized during RAG operations.
+    </p>
+  </div>
+
+  <!-- Hardware Cards Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- GPU -->
+    <Card class="space-y-3 bg-[#151517]">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-xs text-amber-400">COMPUTE // ACCELERATION</span>
+        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/10 text-amber-300">RECOMMENDED</span>
+      </div>
+      <h3 class="text-lg font-medium text-white">GPU (VRAM)</h3>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        NVIDIA (CUDA) or Apple Silicon (Metal) accelerates matrix multiplications for vector embeddings and LLM answer generation by 5x-10x.
+      </p>
+    </Card>
+
+    <!-- CPU -->
+    <Card class="space-y-3 bg-[#151517]">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-xs text-zinc-400">COMPUTE // FALLBACK</span>
+        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-300">WORKS FINE</span>
+      </div>
+      <h3 class="text-lg font-medium text-white">CPU Execution</h3>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        If no discrete GPU is available, Ollama falls back to multi-threaded CPU inference. Answers will take slightly longer (3-8 seconds) but remain 100% functional.
+      </p>
+    </Card>
+
+    <!-- RAM -->
+    <Card class="space-y-3 bg-[#151517]">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-xs text-blue-400">MEMORY // CAPACITY</span>
+        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/10 text-blue-300">8GB - 16GB MIN</span>
+      </div>
+      <h3 class="text-lg font-medium text-white">System RAM</h3>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Holds the quantized Llama 3.1 model weights (4.7 GB) and Qdrant vector index in active memory during chat sessions to prevent disk swapping.
+      </p>
+    </Card>
+
+    <!-- Disk Space -->
+    <Card class="space-y-3 bg-[#151517]">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-xs text-purple-400">STORAGE // FOOTPRINT</span>
+        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-500/10 text-purple-300">~12 GB FREE</span>
+      </div>
+      <h3 class="text-lg font-medium text-white">Disk Storage</h3>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Required to store Ollama model weights, Docker image layers, Qdrant persistent storage volumes, and cached PDF document uploads.
+      </p>
+    </Card>
+  </div>
+
+  <!-- Detailed Disk Space Breakdown Table -->
+  <Card class="p-6 bg-[#18181a] border-[#25282e] space-y-4">
+    <div class="flex items-center justify-between border-b border-[#212327] pb-4">
+      <div>
+        <h4 class="text-base font-normal text-white">Where is Disk Space Allocated?</h4>
+        <p class="text-xs text-zinc-400">Detailed breakdown of storage usage across your drive</p>
+      </div>
+      <span class="font-mono text-xs text-amber-300 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">
+        Total Estimated: ~11.5 GB
+      </span>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="p-4 rounded bg-black/40 border border-white/5 space-y-1">
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-zinc-300 font-medium">1. Ollama LLM Model</span>
+          <span class="font-mono text-amber-400">~4.7 GB</span>
+        </div>
+        <p class="text-[11px] text-zinc-500">Llama 3.1 8B quantized (Q4_K_M)</p>
+      </div>
+
+      <div class="p-4 rounded bg-black/40 border border-white/5 space-y-1">
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-zinc-300 font-medium">2. Embedding Model</span>
+          <span class="font-mono text-purple-400">~1.2 GB</span>
+        </div>
+        <p class="text-[11px] text-zinc-500">Qwen Embedding weights</p>
+      </div>
+
+      <div class="p-4 rounded bg-black/40 border border-white/5 space-y-1">
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-zinc-300 font-medium">3. Qdrant Docker Image</span>
+          <span class="font-mono text-blue-400">~500 MB</span>
+        </div>
+        <p class="text-[11px] text-zinc-500">qdrant/qdrant engine container</p>
+      </div>
+
+      <div class="p-4 rounded bg-black/40 border border-white/5 space-y-1">
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-zinc-300 font-medium">4. Vector DB & Uploads</span>
+          <span class="font-mono text-emerald-400">~50 MB / doc</span>
+        </div>
+        <p class="text-[11px] text-zinc-500">Persistent vectors & PDF chunks</p>
+      </div>
+    </div>
+  </Card>
+</section>

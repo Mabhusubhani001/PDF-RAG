@@ -1,0 +1,114 @@
+---
+import Card from '../common/Card.astro';
+import SectionEyebrow from '../common/SectionEyebrow.astro';
+---
+
+<section class="space-y-8">
+  <div class="space-y-2">
+    <SectionEyebrow text="CORE CONCEPTS & INFRASTRUCTURE" />
+    <h2 class="heading-display-md text-white">Understanding Local RAG Prerequisites</h2>
+    <p class="text-sm text-zinc-400 max-w-3xl">
+      Before processing documents locally, it is essential to understand the three core engines running on your machine and how they interact.
+    </p>
+  </div>
+
+  <!-- 3 Pillars Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Ollama -->
+    <Card class="space-y-4 border-amber-500/20 bg-[#141415]">
+      <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21M6.75 6.75h10.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25H6.75a2.25 2.25 0 0 1-2.25-2.25V9a2.25 2.25 0 0 1 2.25-2.25Z" />
+        </svg>
+      </div>
+      <div>
+        <span class="font-mono text-xs text-amber-400">01 // INFERENCE ENGINE</span>
+        <h3 class="text-xl font-normal text-white">What is Ollama?</h3>
+      </div>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Ollama is a lightweight local execution framework for running open-weights LLMs (like Llama 3.1 and Qwen Embeddings) directly on hardware without cloud dependencies.
+      </p>
+      <div class="pt-2 border-t border-[#212327]">
+        <span class="text-[11px] text-amber-300 font-mono">Why required? Generates text answers & vector math on your GPU/CPU.</span>
+      </div>
+    </Card>
+
+    <!-- Docker -->
+    <Card class="space-y-4 border-blue-500/20 bg-[#141415]">
+      <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+        </svg>
+      </div>
+      <div>
+        <span class="font-mono text-xs text-blue-400">02 // CONTAINER RUNTIME</span>
+        <h3 class="text-xl font-normal text-white">What is Docker?</h3>
+      </div>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Docker creates isolated software containers that run applications predictably. Docker Desktop hosts the Qdrant database in a self-contained sandbox environment.
+      </p>
+      <div class="pt-2 border-t border-[#212327]">
+        <span class="text-[11px] text-blue-300 font-mono">Why required? Ensures Qdrant runs with persistent volume storage.</span>
+      </div>
+    </Card>
+
+    <!-- Qdrant -->
+    <Card class="space-y-4 border-emerald-500/20 bg-[#141415]">
+      <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+        </svg>
+      </div>
+      <div>
+        <span class="font-mono text-xs text-emerald-400">03 // VECTOR DATABASE</span>
+        <h3 class="text-xl font-normal text-white">What is Qdrant?</h3>
+      </div>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Qdrant is a high-performance vector search database. Unlike traditional SQL databases that match exact words, Qdrant finds semantically similar text vectors in milliseconds.
+      </p>
+      <div class="pt-2 border-t border-[#212327]">
+        <span class="text-[11px] text-emerald-300 font-mono">Why required? Indexes document chunk vectors for instant semantic lookup.</span>
+      </div>
+    </Card>
+  </div>
+
+  <!-- Deep Architecture Breakdown: LLM vs Embedding vs Vector DB -->
+  <Card class="p-8 space-y-6 bg-[#18181a] border-[#25282e]">
+    <div class="space-y-2">
+      <span class="font-mono text-xs text-amber-400">DEEP DIVE // THREE DIFFERENT MODELS & ENGINES</span>
+      <h3 class="text-2xl font-normal text-white">LLM vs Embedding Model vs Vector Database</h3>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
+      <div class="p-4 rounded-lg bg-black/40 border border-white/10 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-semibold text-sm text-white">1. Large Language Model</span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/20 text-amber-300">Llama 3.1 (8B)</span>
+        </div>
+        <p class="text-xs text-zinc-400">
+          The <strong>reasoning engine</strong>. Takes retrieved text chunks + user question and synthesizes a human-like, accurate answer.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-lg bg-black/40 border border-white/10 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-semibold text-sm text-white">2. Embedding Model</span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-500/20 text-purple-300">Qwen Embedding</span>
+        </div>
+        <p class="text-xs text-zinc-400">
+          The <strong>translator</strong>. Converts text into high-dimensional arrays of numbers (e.g. 1024 floats) representing semantic meaning.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-lg bg-black/40 border border-white/10 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-semibold text-sm text-white">3. Vector Database</span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300">Qdrant Engine</span>
+        </div>
+        <p class="text-xs text-zinc-400">
+          The <strong>indexer & search engine</strong>. Computes cosine distance between query vectors and stored PDF vectors to instantly retrieve relevant passages.
+        </p>
+      </div>
+    </div>
+  </Card>
+</section>

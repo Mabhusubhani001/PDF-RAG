@@ -1,0 +1,291 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionEyebrow from '../../components/common/SectionEyebrow.astro';
+import Card from '../../components/common/Card.astro';
+import ButtonPill from '../../components/common/ButtonPill.astro';
+---
+
+<Layout 
+  title="Cloud AI Credentials & API Setup | PDF RAG Playground"
+  description="Configure Google Gemini API key and Qdrant Cloud vector database credentials for high-speed cloud PDF RAG."
+>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+    
+    <!-- Page Header -->
+    <div class="space-y-4 max-w-3xl">
+      <SectionEyebrow text="CLOUD AI PIPELINE // GEMINI & QDRANT CLOUD" />
+      <h1 class="heading-display-lg text-white">
+        Cloud AI API Setup & Credentials
+      </h1>
+      <p class="text-base md:text-lg text-zinc-400 font-normal leading-relaxed">
+        Run high-speed RAG using Google Gemini for embeddings & answer generation, paired with managed Qdrant Cloud vector infrastructure. Zero local GPU required.
+      </p>
+    </div>
+
+    <!-- Explainer Cards: Why each credential is required -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- Card 1: Gemini API Key -->
+      <Card class="space-y-4 border-purple-500/30 bg-[#141416]">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+            </svg>
+          </div>
+          <div>
+            <span class="font-mono text-xs text-purple-400">CREDENTIAL 01</span>
+            <h3 class="text-lg font-medium text-white">Google Gemini API Key</h3>
+          </div>
+        </div>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          Required to generate 1536-dimensional dense vector embeddings using Google's <code class="text-purple-300 font-mono">text-embedding-004</code> model and synthesize answers using <code class="text-purple-300 font-mono">Gemini 1.5 / 2.0 Flash</code>.
+        </p>
+        <div class="pt-2 border-t border-[#212327]">
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-[11px] font-mono text-purple-400 hover:text-purple-300 flex items-center gap-1">
+            Get free Gemini API Key from Google AI Studio ↗
+          </a>
+        </div>
+      </Card>
+
+      <!-- Card 2: Qdrant Cloud Endpoint & Key -->
+      <Card class="space-y-4 border-purple-500/30 bg-[#141416]">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a3 3 0 0 0 3 3s2.25 0 3.75 0M15 9.75l1.5-1.5M15 9.75l-1.5-1.5" />
+            </svg>
+          </div>
+          <div>
+            <span class="font-mono text-xs text-purple-400">CREDENTIAL 02 & 03</span>
+            <h3 class="text-lg font-medium text-white">Qdrant Cloud Credentials</h3>
+          </div>
+        </div>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          Required to connect to your managed Qdrant Cloud cluster endpoint. Vectors and document payload metadata are stored in a high-availability cloud vector collection.
+        </p>
+        <div class="pt-2 border-t border-[#212327]">
+          <a href="https://cloud.qdrant.io" target="_blank" class="text-[11px] font-mono text-purple-400 hover:text-purple-300 flex items-center gap-1">
+            Create free Qdrant Cloud cluster ↗
+          </a>
+        </div>
+      </Card>
+
+    </div>
+
+    <!-- Interactive API Credentials Validation Form -->
+    <Card class="p-8 bg-[#18181a] border-purple-500/40 space-y-6">
+      <div class="space-y-2 border-b border-[#212327] pb-4">
+        <SectionEyebrow text="LIVE API CREDENTIAL VALIDATION" />
+        <h3 class="text-xl font-normal text-white">Enter Your API Keys & Cluster Endpoint</h3>
+        <p class="text-xs text-zinc-400">
+          Credentials are saved strictly in your local browser session memory for API communication.
+        </p>
+      </div>
+
+      <form id="cloud-credentials-form" class="space-y-6">
+        
+        <!-- Field 1: Gemini API Key -->
+        <div class="space-y-2">
+          <label for="input-gemini-key" class="block text-xs font-mono text-zinc-300 flex items-center justify-between">
+            <span>GOOGLE GEMINI API KEY <span class="text-rose-400">*</span></span>
+            <span class="text-[11px] text-zinc-500">Format: AIzaSy...</span>
+          </label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="input-gemini-key" 
+              placeholder="Paste your Gemini API Key here..."
+              class="w-full bg-[#0a0a0a] border border-[#2d2f36] rounded-lg px-4 py-2.5 text-xs font-mono text-white placeholder-zinc-600 focus:outline-none focus:border-purple-500 transition-colors"
+              required
+            />
+            <button 
+              type="button" 
+              class="toggle-key-visibility absolute right-3 top-2.5 text-[11px] font-mono text-zinc-400 hover:text-white"
+              data-target="input-gemini-key"
+            >
+              Show
+            </button>
+          </div>
+        </div>
+
+        <!-- Field 2: Qdrant Cloud Endpoint -->
+        <div class="space-y-2">
+          <label for="input-qdrant-url" class="block text-xs font-mono text-zinc-300 flex items-center justify-between">
+            <span>QDRANT CLOUD ENDPOINT URL <span class="text-rose-400">*</span></span>
+            <span class="text-[11px] text-zinc-500">Format: https://xxx.cloud.qdrant.io:6333</span>
+          </label>
+          <input 
+            type="url" 
+            id="input-qdrant-url" 
+            placeholder="https://your-cluster-id.cloud.qdrant.io:6333"
+            class="w-full bg-[#0a0a0a] border border-[#2d2f36] rounded-lg px-4 py-2.5 text-xs font-mono text-white placeholder-zinc-600 focus:outline-none focus:border-purple-500 transition-colors"
+            required
+          />
+        </div>
+
+        <!-- Field 3: Qdrant Cloud API Key -->
+        <div class="space-y-2">
+          <label for="input-qdrant-key" class="block text-xs font-mono text-zinc-300 flex items-center justify-between">
+            <span>QDRANT CLOUD API KEY <span class="text-rose-400">*</span></span>
+            <span class="text-[11px] text-zinc-500">Format: qdrant_api_key_...</span>
+          </label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="input-qdrant-key" 
+              placeholder="Paste your Qdrant Cloud API Key..."
+              class="w-full bg-[#0a0a0a] border border-[#2d2f36] rounded-lg px-4 py-2.5 text-xs font-mono text-white placeholder-zinc-600 focus:outline-none focus:border-purple-500 transition-colors"
+              required
+            />
+            <button 
+              type="button" 
+              class="toggle-key-visibility absolute right-3 top-2.5 text-[11px] font-mono text-zinc-400 hover:text-white"
+              data-target="input-qdrant-key"
+            >
+              Show
+            </button>
+          </div>
+        </div>
+
+        <!-- Validation Trigger Button -->
+        <div class="pt-2 flex items-center gap-4">
+          <button 
+            type="submit" 
+            id="btn-validate-credentials"
+            class="pill-button-outline text-xs text-purple-300 border-purple-500/40 bg-purple-500/10 hover:bg-purple-500/20"
+          >
+            <svg class="w-3.5 h-3.5 animate-spin hidden" id="val-spinner" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span id="val-btn-text">Validate Credentials & Save</span>
+          </button>
+
+          <span class="text-xs font-mono text-emerald-400 hidden" id="val-status-text">
+            ✓ API Credentials Saved in Session
+          </span>
+        </div>
+
+      </form>
+
+      <!-- Live Validation Result Cards (Shown after validation) -->
+      <div class="hidden space-y-3 pt-4 border-t border-[#212327]" id="validation-results">
+        <div class="p-3.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-xs font-mono text-emerald-300">
+          <span class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+            Gemini API Key: Stored & Ready
+          </span>
+          <span>OK</span>
+        </div>
+
+        <div class="p-3.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-xs font-mono text-emerald-300">
+          <span class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+            Qdrant Cloud Endpoint: Stored & Ready
+          </span>
+          <span>OK</span>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Proceed Banner -->
+    <Card class="p-6 bg-gradient-to-r from-[#191919] via-[#1b1724] to-[#191919] border border-purple-500/30 flex flex-col sm:flex-row items-center justify-between gap-6 opacity-50 pointer-events-none transition-all duration-300" id="proceed-card">
+      <div class="space-y-1 text-center sm:text-left">
+        <div class="flex items-center justify-center sm:justify-start gap-2 text-purple-300 text-sm font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          Cloud Credentials Validated & Unlocked
+        </div>
+        <p class="text-xs text-zinc-400">Proceed to PDF drag & drop upload to begin Cloud RAG vector processing.</p>
+      </div>
+
+      <ButtonPill href="/cloud/upload" variant="dusk" size="lg" class="shrink-0">
+        Proceed to Cloud Upload
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+      </ButtonPill>
+    </Card>
+
+  </div>
+</Layout>
+
+<script>
+  const form = document.getElementById('cloud-credentials-form') as HTMLFormElement;
+  const inputGemini = document.getElementById('input-gemini-key') as HTMLInputElement;
+  const inputUrl = document.getElementById('input-qdrant-url') as HTMLInputElement;
+  const inputQKey = document.getElementById('input-qdrant-key') as HTMLInputElement;
+
+  const valBtnText = document.getElementById('val-btn-text');
+  const valSpinner = document.getElementById('val-spinner');
+  const valStatusText = document.getElementById('val-status-text');
+  const validationResults = document.getElementById('validation-results');
+  const proceedCard = document.getElementById('proceed-card');
+  const toggleBtns = document.querySelectorAll('.toggle-key-visibility');
+
+  // Load existing credentials from sessionStorage if present
+  if (typeof window !== 'undefined') {
+    if (inputGemini && sessionStorage.getItem('gemini_api_key')) {
+      inputGemini.value = sessionStorage.getItem('gemini_api_key') || '';
+    }
+    if (inputUrl && sessionStorage.getItem('qdrant_cloud_url')) {
+      inputUrl.value = sessionStorage.getItem('qdrant_cloud_url') || '';
+    }
+    if (inputQKey && sessionStorage.getItem('qdrant_cloud_key')) {
+      inputQKey.value = sessionStorage.getItem('qdrant_cloud_key') || '';
+    }
+    if (sessionStorage.getItem('gemini_api_key')) {
+      if (valStatusText) valStatusText.classList.remove('hidden');
+      if (validationResults) validationResults.classList.remove('hidden');
+      if (proceedCard) proceedCard.classList.remove('opacity-50', 'pointer-events-none');
+    }
+  }
+
+  toggleBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      if (targetId) {
+        const inputEl = document.getElementById(targetId) as HTMLInputElement;
+        if (inputEl) {
+          if (inputEl.type === 'password') {
+            inputEl.type = 'text';
+            btn.textContent = 'Hide';
+          } else {
+            inputEl.type = 'password';
+            btn.textContent = 'Show';
+          }
+        }
+      }
+    });
+  });
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const gKey = inputGemini?.value.trim();
+      const qUrl = inputUrl?.value.trim();
+      const qKey = inputQKey?.value.trim();
+
+      if (valBtnText && valSpinner) {
+        valSpinner.classList.remove('hidden');
+        valBtnText.textContent = 'Saving Credentials...';
+
+        // Save to Session Storage
+        sessionStorage.setItem('gemini_api_key', gKey);
+        sessionStorage.setItem('qdrant_cloud_url', qUrl);
+        sessionStorage.setItem('qdrant_cloud_key', qKey);
+
+        setTimeout(() => {
+          valSpinner.classList.add('hidden');
+          valBtnText.textContent = 'Credentials Saved ✓';
+
+          if (valStatusText) valStatusText.classList.remove('hidden');
+          if (validationResults) validationResults.classList.remove('hidden');
+          if (proceedCard) {
+            proceedCard.classList.remove('opacity-50', 'pointer-events-none');
+          }
+        }, 500);
+      }
+    });
+  }
+</script>

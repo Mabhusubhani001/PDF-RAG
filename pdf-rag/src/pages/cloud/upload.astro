@@ -1,0 +1,385 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionEyebrow from '../../components/common/SectionEyebrow.astro';
+import Card from '../../components/common/Card.astro';
+import ButtonPill from '../../components/common/ButtonPill.astro';
+---
+
+<Layout 
+  title="Upload PDF Document | Cloud RAG Pipeline"
+  description="Select or drag and drop a PDF document to begin Google Gemini vector embedding and Qdrant Cloud cluster indexing."
+>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+    <!-- Header -->
+    <div class="space-y-3 text-center max-w-2xl mx-auto">
+      <SectionEyebrow text="CLOUD PIPELINE // STEP 01" class="justify-center" />
+      <h1 class="heading-display-md text-white">Upload PDF for Cloud RAG</h1>
+      <p class="text-sm text-zinc-400">
+        Enter your Google Gemini and Qdrant Cloud cluster credentials, then select a PDF document to index.
+      </p>
+    </div>
+
+    <!-- Credentials Setup Card -->
+    <Card class="p-6 bg-[#16141a] border-purple-500/40 space-y-6">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div class="space-y-1">
+          <h3 class="text-base font-medium text-white flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+            Cloud API & Cluster Configuration
+          </h3>
+          <p class="text-xs text-zinc-400">
+            Enter your Google Gemini API Key and Qdrant Cloud cluster credentials to perform cloud vector retrieval.
+          </p>
+        </div>
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-mono bg-purple-500/20 text-purple-300 border border-purple-500/30">
+          GEMINI + QDRANT CLOUD
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Gemini API Key -->
+        <div class="space-y-1.5">
+          <label for="gemini-key-input" class="text-xs font-mono text-zinc-300 block">
+            1. Google Gemini API Key:
+          </label>
+          <input 
+            type="password" 
+            id="gemini-key-input" 
+            placeholder="AIzaSy..." 
+            class="w-full bg-black/60 border border-[#2d2f36] rounded-lg px-3.5 py-2 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-purple-500/60 font-mono transition-colors"
+          />
+        </div>
+
+        <!-- Qdrant Cloud Cluster URL -->
+        <div class="space-y-1.5">
+          <label for="qdrant-url-input" class="text-xs font-mono text-zinc-300 block">
+            2. Qdrant Cloud Cluster URL:
+          </label>
+          <input 
+            type="url" 
+            id="qdrant-url-input" 
+            placeholder="https://xyz.aws.cloud.qdrant.io" 
+            class="w-full bg-black/60 border border-[#2d2f36] rounded-lg px-3.5 py-2 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-purple-500/60 font-mono transition-colors"
+          />
+        </div>
+
+        <!-- Qdrant Cloud API Key -->
+        <div class="space-y-1.5">
+          <label for="qdrant-key-input" class="text-xs font-mono text-zinc-300 block">
+            3. Qdrant Cluster API Key:
+          </label>
+          <input 
+            type="password" 
+            id="qdrant-key-input" 
+            placeholder="qdrant-api-key..." 
+            class="w-full bg-black/60 border border-[#2d2f36] rounded-lg px-3.5 py-2 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-purple-500/60 font-mono transition-colors"
+          />
+        </div>
+      </div>
+
+      <div class="p-3.5 rounded-lg bg-black/40 border border-white/5 text-[11px] font-mono text-zinc-400 space-y-1">
+        <p>💡 <strong class="text-purple-300">How to create a free Qdrant Cloud Cluster:</strong> Go to <a href="https://cloud.qdrant.io" target="_blank" class="text-purple-400 underline hover:text-purple-300">cloud.qdrant.io</a>, log in, create a free cluster, and copy your Cluster URL (e.g. <code class="text-purple-200">https://xyz.aws.cloud.qdrant.io</code>) and API key.</p>
+      </div>
+    </Card>
+
+    <!-- Dropzone Card -->
+    <Card class="p-8 sm:p-12 border-2 border-dashed border-[#333740] bg-[#141416] hover:border-purple-500/50 transition-all duration-300 relative" id="dropzone-card">
+      <input 
+        type="file" 
+        id="pdf-file-input" 
+        accept="application/pdf" 
+        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" 
+        aria-label="Upload PDF document input"
+      />
+
+      <!-- Initial Empty State -->
+      <div class="text-center space-y-6 flex flex-col items-center justify-center py-6" id="empty-state">
+        <div class="w-16 h-16 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+          <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+          </svg>
+        </div>
+
+        <div class="space-y-2 max-w-sm">
+          <h3 class="text-xl font-medium text-white">Drag & drop your PDF here</h3>
+          <p class="text-xs text-zinc-400">or click to browse from your computer</p>
+        </div>
+
+        <div class="flex items-center gap-3 text-[11px] font-mono text-zinc-500">
+          <span class="px-2.5 py-1 rounded bg-black/40 border border-white/5">Supports .pdf</span>
+          <span class="px-2.5 py-1 rounded bg-black/40 border border-white/5">Max 50 MB</span>
+          <span class="px-2.5 py-1 rounded bg-black/40 border border-purple-500/20 text-purple-300">Gemini 1536d</span>
+        </div>
+      </div>
+
+      <!-- Selected File State (Hidden by default) -->
+      <div class="hidden space-y-6" id="selected-file-state">
+        <div class="flex items-start justify-between p-4 rounded-lg bg-black/50 border border-purple-500/30">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center font-mono font-bold text-sm border border-purple-500/40">
+              PDF
+            </div>
+            <div>
+              <h4 class="text-base font-medium text-white truncate max-w-md" id="file-name-display">
+                document.pdf
+              </h4>
+              <div class="flex items-center gap-3 text-xs text-zinc-400 font-mono mt-0.5">
+                <span id="file-size-display">0 KB</span>
+                <span>•</span>
+                <span id="file-pages-display">Est. ~1 Page</span>
+                <span>•</span>
+                <span id="file-chunks-display">Est. ~2 Chunks</span>
+              </div>
+            </div>
+          </div>
+
+          <button 
+            type="button" 
+            id="btn-remove-file"
+            class="z-30 text-xs font-mono text-zinc-400 hover:text-rose-400 p-2 rounded hover:bg-white/5 transition-colors"
+          >
+            Remove ✕
+          </button>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-mono">
+            <span class="text-zinc-400" id="progress-status-text">Ready to transmit to Cloud RAG pipeline...</span>
+            <span class="text-purple-400" id="progress-percent-text">100% Ready</span>
+          </div>
+          <div class="w-full h-2 rounded-full bg-black/60 overflow-hidden border border-white/10">
+            <div class="h-full bg-gradient-to-r from-purple-500 to-purple-300 w-full transition-all duration-300" id="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Preset Demo PDF Selection -->
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <SectionEyebrow text="OR TRY A SAMPLE CLOUD EDUCATIONAL PDF" />
+        <span class="text-xs text-zinc-500 font-mono">Pre-loaded Samples</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Sample 1 -->
+        <button 
+          type="button" 
+          class="sample-pdf-btn text-left p-4 rounded-lg bg-[#18181a] border border-[#212327] hover:border-purple-500/40 hover:bg-[#1a1724] transition-all group"
+          data-filename="Gemini_1.5_Technical_Report.pdf"
+          data-size="4.2 MB"
+          data-pages="28 Pages"
+          data-chunks="74 Chunks"
+        >
+          <div class="flex items-start justify-between">
+            <div class="space-y-1">
+              <h4 class="text-sm font-medium text-white group-hover:text-purple-300 transition-colors">
+                Gemini 1.5 Technical Report
+              </h4>
+              <p class="text-xs text-zinc-400">Google DeepMind's technical paper detailing 1M+ token context & multimodal RAG capabilities.</p>
+            </div>
+            <span class="text-xs font-mono text-purple-400 shrink-0 ml-2">Select →</span>
+          </div>
+        </button>
+
+        <!-- Sample 2 -->
+        <button 
+          type="button" 
+          class="sample-pdf-btn text-left p-4 rounded-lg bg-[#18181a] border border-[#212327] hover:border-purple-500/40 hover:bg-[#1a1724] transition-all group"
+          data-filename="Multimodal_Embedding_Spaces_Google_Research.pdf"
+          data-size="3.1 MB"
+          data-pages="19 Pages"
+          data-chunks="52 Chunks"
+        >
+          <div class="flex items-start justify-between">
+            <div class="space-y-1">
+              <h4 class="text-sm font-medium text-white group-hover:text-purple-300 transition-colors">
+                Multimodal Embedding Spaces
+              </h4>
+              <p class="text-xs text-zinc-400">Google Research paper on aligning vision, audio, and text into joint 1536-dim vector spaces.</p>
+            </div>
+            <span class="text-xs font-mono text-purple-400 shrink-0 ml-2">Select →</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Action Footer Bar -->
+    <div class="flex items-center justify-between pt-6 border-t border-[#212327]">
+      <ButtonPill href="/cloud" variant="ghost" size="md">
+        ← Back to Cloud Overview
+      </ButtonPill>
+
+      <button 
+        type="button" 
+        id="btn-start-pipeline" 
+        class="pill-button-primary bg-purple-600 hover:bg-purple-500 opacity-50 pointer-events-none transition-all flex items-center gap-2 cursor-pointer"
+      >
+        <span>Start Cloud 9-Stage RAG Pipeline</span>
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { uploadPdfDocument } from '../../utils/api';
+
+  const fileInput = document.getElementById('pdf-file-input') as HTMLInputElement;
+  const emptyState = document.getElementById('empty-state');
+  const selectedState = document.getElementById('selected-file-state');
+  const fileNameDisplay = document.getElementById('file-name-display');
+  const fileSizeDisplay = document.getElementById('file-size-display');
+  const filePagesDisplay = document.getElementById('file-pages-display');
+  const fileChunksDisplay = document.getElementById('file-chunks-display');
+  const btnRemoveFile = document.getElementById('btn-remove-file');
+  const btnStartPipeline = document.getElementById('btn-start-pipeline');
+  const sampleBtns = document.querySelectorAll('.sample-pdf-btn');
+
+  const geminiKeyInput = document.getElementById('gemini-key-input') as HTMLInputElement;
+  const qdrantUrlInput = document.getElementById('qdrant-url-input') as HTMLInputElement;
+  const qdrantKeyInput = document.getElementById('qdrant-key-input') as HTMLInputElement;
+
+  let currentSelectedFile: File | null = null;
+  let currentSampleData: any = null;
+
+  // Restore saved keys from sessionStorage
+  if (typeof window !== 'undefined') {
+    if (geminiKeyInput && sessionStorage.getItem('gemini_api_key')) {
+      geminiKeyInput.value = sessionStorage.getItem('gemini_api_key') || '';
+    }
+    if (qdrantUrlInput && sessionStorage.getItem('qdrant_cloud_url')) {
+      qdrantUrlInput.value = sessionStorage.getItem('qdrant_cloud_url') || '';
+    }
+    if (qdrantKeyInput && sessionStorage.getItem('qdrant_cloud_key')) {
+      qdrantKeyInput.value = sessionStorage.getItem('qdrant_cloud_key') || '';
+    }
+  }
+
+  function saveCredentials() {
+    if (geminiKeyInput) sessionStorage.setItem('gemini_api_key', geminiKeyInput.value.trim());
+    if (qdrantUrlInput) sessionStorage.setItem('qdrant_cloud_url', qdrantUrlInput.value.trim());
+    if (qdrantKeyInput) sessionStorage.setItem('qdrant_cloud_key', qdrantKeyInput.value.trim());
+  }
+
+  function formatBytes(bytes: number, decimals = 1) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  function handleFileSelect(file: File) {
+    currentSelectedFile = file;
+    currentSampleData = null;
+
+    if (fileNameDisplay) fileNameDisplay.textContent = file.name;
+    if (fileSizeDisplay) fileSizeDisplay.textContent = formatBytes(file.size);
+
+    const estPages = Math.max(1, Math.round(file.size / 30000));
+    const estChunks = Math.max(2, Math.round(file.size / 8000));
+
+    if (filePagesDisplay) filePagesDisplay.textContent = `${estPages} Page${estPages > 1 ? 's' : ''}`;
+    if (fileChunksDisplay) fileChunksDisplay.textContent = `${estChunks} Chunk${estChunks > 1 ? 's' : ''}`;
+
+    if (emptyState) emptyState.classList.add('hidden');
+    if (selectedState) selectedState.classList.remove('hidden');
+
+    if (btnStartPipeline) {
+      btnStartPipeline.classList.remove('opacity-50', 'pointer-events-none');
+    }
+  }
+
+  function resetSelection() {
+    currentSelectedFile = null;
+    currentSampleData = null;
+    if (fileInput) fileInput.value = '';
+
+    if (emptyState) emptyState.classList.remove('hidden');
+    if (selectedState) selectedState.classList.add('hidden');
+
+    if (btnStartPipeline) {
+      btnStartPipeline.classList.add('opacity-50', 'pointer-events-none');
+    }
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener('change', (e: any) => {
+      const files = e.target.files;
+      if (files && files.length > 0) {
+        handleFileSelect(files[0]);
+      }
+    });
+  }
+
+  if (btnRemoveFile) {
+    btnRemoveFile.addEventListener('click', (e) => {
+      e.stopPropagation();
+      resetSelection();
+    });
+  }
+
+  sampleBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filename = btn.getAttribute('data-filename') || 'Sample.pdf';
+      const size = btn.getAttribute('data-size') || '2.5 MB';
+      const pages = btn.getAttribute('data-pages') || '10 Pages';
+      const chunks = btn.getAttribute('data-chunks') || '30 Chunks';
+
+      currentSampleData = { filename, size, pages, chunks };
+      currentSelectedFile = null;
+
+      if (fileNameDisplay) fileNameDisplay.textContent = filename;
+      if (fileSizeDisplay) fileSizeDisplay.textContent = size;
+      if (filePagesDisplay) filePagesDisplay.textContent = pages;
+      if (fileChunksDisplay) fileChunksDisplay.textContent = chunks;
+
+      if (emptyState) emptyState.classList.add('hidden');
+      if (selectedState) selectedState.classList.remove('hidden');
+
+      if (btnStartPipeline) {
+        btnStartPipeline.classList.remove('opacity-50', 'pointer-events-none');
+      }
+    });
+  });
+
+  if (btnStartPipeline) {
+    btnStartPipeline.addEventListener('click', async () => {
+      saveCredentials();
+
+      let filename = 'Document.pdf';
+      let pagesCount = '1 Page';
+      let chunksCount = '2 Chunks';
+
+      if (currentSelectedFile) {
+        filename = currentSelectedFile.name;
+        const uploadRes = await uploadPdfDocument(currentSelectedFile, 'cloud');
+        if (uploadRes) {
+          pagesCount = `${uploadRes.metadata.estimated_pages} Page${uploadRes.metadata.estimated_pages > 1 ? 's' : ''}`;
+          chunksCount = `${uploadRes.metadata.estimated_chunks} Chunk${uploadRes.metadata.estimated_chunks > 1 ? 's' : ''}`;
+          sessionStorage.setItem('current_job_id', uploadRes.job_id);
+        } else {
+          const estPages = Math.max(1, Math.round(currentSelectedFile.size / 30000));
+          const estChunks = Math.max(2, Math.round(currentSelectedFile.size / 8000));
+          pagesCount = `${estPages} Page${estPages > 1 ? 's' : ''}`;
+          chunksCount = `${estChunks} Chunk${estChunks > 1 ? 's' : ''}`;
+        }
+      } else if (currentSampleData) {
+        filename = currentSampleData.filename;
+        pagesCount = currentSampleData.pages;
+        chunksCount = currentSampleData.chunks;
+      }
+
+      sessionStorage.setItem('active_pdf_name', filename);
+      sessionStorage.setItem('active_pdf_pages', pagesCount);
+      sessionStorage.setItem('active_pdf_chunks', chunksCount);
+
+      window.location.href = '/cloud/processing';
+    });
+  }
+</script>

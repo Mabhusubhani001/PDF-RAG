@@ -1,0 +1,250 @@
+---
+import Card from '../common/Card.astro';
+import ButtonPill from '../common/ButtonPill.astro';
+import SectionEyebrow from '../common/SectionEyebrow.astro';
+---
+
+<section class="space-y-6 pt-4" id="environment-checks">
+  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#212327] pb-6">
+    <div class="space-y-2">
+      <SectionEyebrow text="SYSTEM READINESS DIAGNOSTICS" />
+      <h2 class="heading-display-md text-white">Environment Status Checks</h2>
+      <p class="text-sm text-zinc-400">
+        Verify that all local infrastructure components are running before creating vector collections.
+      </p>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <button 
+        id="btn-run-diagnostics"
+        type="button" 
+        class="pill-button-outline text-xs text-amber-300 border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20"
+      >
+        <svg class="w-3.5 h-3.5 animate-spin hidden" id="diag-spinner" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        <span id="diag-btn-text">Run Live Readiness Check</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Status Cards Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="status-cards-container">
+    
+    <!-- 1. Ollama Running -->
+    <div class="p-4 rounded-lg bg-[#18181a] border border-rose-500/40 space-y-3 transition-all" id="card-ollama">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-[11px] text-zinc-400">SERVICE 01</span>
+        <span class="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]" id="dot-ollama"></span>
+      </div>
+      <div class="space-y-1">
+        <h4 class="text-sm font-medium text-white">Ollama Engine</h4>
+        <p class="text-[11px] font-mono text-rose-400" id="text-ollama">🔴 Offline (ollama serve)</p>
+      </div>
+    </div>
+
+    <!-- 2. Docker Running -->
+    <div class="p-4 rounded-lg bg-[#18181a] border border-rose-500/40 space-y-3 transition-all" id="card-docker">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-[11px] text-zinc-400">SERVICE 02</span>
+        <span class="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]" id="dot-docker"></span>
+      </div>
+      <div class="space-y-1">
+        <h4 class="text-sm font-medium text-white">Docker Engine</h4>
+        <p class="text-[11px] font-mono text-rose-400" id="text-docker">🔴 Offline (Docker Desktop)</p>
+      </div>
+    </div>
+
+    <!-- 3. Qdrant Running -->
+    <div class="p-4 rounded-lg bg-[#18181a] border border-rose-500/40 space-y-3 transition-all" id="card-qdrant">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-[11px] text-zinc-400">SERVICE 03</span>
+        <span class="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]" id="dot-qdrant"></span>
+      </div>
+      <div class="space-y-1">
+        <h4 class="text-sm font-medium text-white">Qdrant Vector DB</h4>
+        <p class="text-[11px] font-mono text-rose-400" id="text-qdrant">🔴 Offline (Port 6333)</p>
+      </div>
+    </div>
+
+    <!-- 4. Models Installed -->
+    <div class="p-4 rounded-lg bg-[#18181a] border border-rose-500/40 space-y-3 transition-all" id="card-models">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-[11px] text-zinc-400">MODELS</span>
+        <span class="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]" id="dot-models"></span>
+      </div>
+      <div class="space-y-1">
+        <h4 class="text-sm font-medium text-white">Required Models</h4>
+        <p class="text-[11px] font-mono text-rose-400" id="text-models">🔴 Missing Llama3.1</p>
+      </div>
+    </div>
+
+    <!-- 5. System Ready -->
+    <div class="p-4 rounded-lg bg-rose-500/10 border border-rose-500/60 space-y-3 transition-all" id="card-ready">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-[11px] text-rose-300">OVERALL</span>
+        <span class="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,1)]" id="dot-ready"></span>
+      </div>
+      <div class="space-y-1">
+        <h4 class="text-sm font-medium text-rose-200" id="title-ready">Not Ready</h4>
+        <p class="text-[11px] font-mono text-rose-300" id="text-ready">Start Ollama & Qdrant</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Instruction Banner when Offline -->
+  <div class="p-4 rounded-lg bg-rose-500/10 border border-rose-500/30 text-xs text-rose-200 font-mono space-y-2 hidden" id="banner-instruction">
+    <div class="font-semibold text-rose-300 flex items-center gap-2">
+      <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      Prerequisites Action Required to Run Local AI:
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-[11px]">
+      <div class="p-2 rounded bg-black/40 border border-white/5 space-y-1">
+        <span class="text-amber-300">1. Run Local Qdrant (Docker):</span>
+        <code class="block text-zinc-300 bg-black/60 p-1.5 rounded">docker run -p 6333:6333 qdrant/qdrant</code>
+      </div>
+      <div class="p-2 rounded bg-black/40 border border-white/5 space-y-1">
+        <span class="text-amber-300">2. Run Ollama & Download Models:</span>
+        <code class="block text-zinc-300 bg-black/60 p-1.5 rounded">ollama serve && ollama pull llama3.1</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proceed Banner -->
+  <Card class="p-6 bg-gradient-to-r from-[#191919] via-[#1c1a17] to-[#191919] border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <div class="space-y-1 text-center sm:text-left">
+      <div class="flex items-center justify-center sm:justify-start gap-2 text-amber-300 text-sm font-medium">
+        <span class="w-2 h-2 rounded-full bg-rose-500" id="proceed-status-dot"></span>
+        <span id="proceed-status-text">Infrastructure Status Check Required</span>
+      </div>
+      <p class="text-xs text-zinc-400" id="proceed-status-sub">Run live diagnostic check or configure prerequisites before PDF upload.</p>
+    </div>
+
+    <ButtonPill href="/local/upload" variant="sunset" size="lg" id="btn-proceed-upload" class="shrink-0">
+      Proceed to PDF Upload
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+    </ButtonPill>
+  </Card>
+</section>
+
+<script>
+  import { fetchSystemHealth } from '../../utils/api';
+
+  const btnDiag = document.getElementById('btn-run-diagnostics');
+  const spinner = document.getElementById('diag-spinner');
+  const btnText = document.getElementById('diag-btn-text');
+  const bannerInstruction = document.getElementById('banner-instruction');
+
+  const cardOllama = document.getElementById('card-ollama');
+  const dotOllama = document.getElementById('dot-ollama');
+  const textOllama = document.getElementById('text-ollama');
+
+  const cardDocker = document.getElementById('card-docker');
+  const dotDocker = document.getElementById('dot-docker');
+  const textDocker = document.getElementById('text-docker');
+
+  const cardQdrant = document.getElementById('card-qdrant');
+  const dotQdrant = document.getElementById('dot-qdrant');
+  const textQdrant = document.getElementById('text-qdrant');
+
+  const cardModels = document.getElementById('card-models');
+  const dotModels = document.getElementById('dot-models');
+  const textModels = document.getElementById('text-models');
+
+  const cardReady = document.getElementById('card-ready');
+  const dotReady = document.getElementById('dot-ready');
+  const titleReady = document.getElementById('title-ready');
+  const textReady = document.getElementById('text-ready');
+
+  const proceedStatusDot = document.getElementById('proceed-status-dot');
+  const proceedStatusText = document.getElementById('proceed-status-text');
+  const proceedStatusSub = document.getElementById('proceed-status-sub');
+
+  function setServiceState(card: HTMLElement | null, dot: HTMLElement | null, text: HTMLElement | null, isOk: boolean, okMsg: string, failMsg: string) {
+    if (!card || !dot || !text) return;
+    if (isOk) {
+      card.className = 'p-4 rounded-lg bg-[#18181a] border border-emerald-500/40 space-y-3 transition-all';
+      dot.className = 'w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]';
+      text.className = 'text-[11px] font-mono text-emerald-400';
+      text.textContent = okMsg;
+    } else {
+      card.className = 'p-4 rounded-lg bg-[#18181a] border border-rose-500/40 space-y-3 transition-all';
+      dot.className = 'w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]';
+      text.className = 'text-[11px] font-mono text-rose-400';
+      text.textContent = failMsg;
+    }
+  }
+
+  async function runCheck() {
+    if (spinner && btnText) {
+      spinner.classList.remove('hidden');
+      btnText.textContent = 'Pinging Endpoints...';
+      if (btnDiag) btnDiag.setAttribute('disabled', 'true');
+
+      const health = await fetchSystemHealth();
+
+      spinner.classList.add('hidden');
+      if (btnDiag) btnDiag.removeAttribute('disabled');
+
+      if (health) {
+        const ollamaStatus = health.services.ollama?.status === 'running';
+        const qdrantStatus = health.services.local_qdrant?.status === 'running';
+        const modelsStatus = health.services.models?.status === 'running';
+
+        setServiceState(cardOllama, dotOllama, textOllama, ollamaStatus, '✓ Port 11434 Active', '🔴 Offline (ollama serve)');
+        setServiceState(cardDocker, dotDocker, textDocker, qdrantStatus, '✓ Daemon Active', '🔴 Offline (Docker Desktop)');
+        setServiceState(cardQdrant, dotQdrant, textQdrant, qdrantStatus, '✓ Port 6333 Active', '🔴 Offline (Port 6333)');
+        setServiceState(cardModels, dotModels, textModels, modelsStatus, '✓ Llama3.1 & Qwen', '🔴 Missing Models');
+
+        const isReady = ollamaStatus && qdrantStatus;
+
+        if (isReady) {
+          if (cardReady) cardReady.className = 'p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/60 space-y-3 transition-all';
+          if (dotReady) dotReady.className = 'w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,1)]';
+          if (titleReady) titleReady.textContent = 'System Ready';
+          if (textReady) {
+            textReady.className = 'text-[11px] font-mono text-emerald-300';
+            textReady.textContent = '✓ All Endpoints Active';
+          }
+          if (bannerInstruction) bannerInstruction.classList.add('hidden');
+          if (proceedStatusDot) proceedStatusDot.className = 'w-2 h-2 rounded-full bg-emerald-400';
+          if (proceedStatusText) proceedStatusText.textContent = 'All Local Services Verified & Ready';
+          if (proceedStatusSub) proceedStatusSub.textContent = 'Proceed to PDF drag & drop upload to begin indexing.';
+          if (btnText) btnText.textContent = 'All Endpoints Active ✓';
+        } else {
+          if (cardReady) cardReady.className = 'p-4 rounded-lg bg-rose-500/10 border border-rose-500/60 space-y-3 transition-all';
+          if (dotReady) dotReady.className = 'w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,1)]';
+          if (titleReady) titleReady.textContent = 'Action Needed';
+          if (textReady) {
+            textReady.className = 'text-[11px] font-mono text-rose-300';
+            textReady.textContent = '🔴 Missing Endpoints';
+          }
+          if (bannerInstruction) bannerInstruction.classList.remove('hidden');
+          if (proceedStatusDot) proceedStatusDot.className = 'w-2 h-2 rounded-full bg-rose-500';
+          if (proceedStatusText) proceedStatusText.textContent = 'Prerequisites Offline (Ollama / Qdrant)';
+          if (proceedStatusSub) proceedStatusSub.textContent = 'Start Docker Qdrant or Ollama server before processing documents.';
+          if (btnText) btnText.textContent = 'Diagnostics Done (Issues Found)';
+        }
+      } else {
+        if (btnText) btnText.textContent = 'Backend Offline';
+        if (bannerInstruction) bannerInstruction.classList.remove('hidden');
+      }
+
+      setTimeout(() => {
+        if (btnText) btnText.textContent = 'Run Live Readiness Check';
+      }, 4000);
+    }
+  }
+
+  if (btnDiag) {
+    btnDiag.addEventListener('click', runCheck);
+  }
+
+  // Run initial diagnostic ping on page mount
+  runCheck();
+</script>

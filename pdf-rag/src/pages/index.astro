@@ -1,0 +1,294 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/common/Card.astro';
+import ButtonPill from '../components/common/ButtonPill.astro';
+import SectionEyebrow from '../components/common/SectionEyebrow.astro';
+import StatusBadge from '../components/common/StatusBadge.astro';
+---
+
+<Layout 
+  title="PDF RAG Playground | Local & Cloud Retrieval-Augmented Generation"
+  description="Explore Retrieval-Augmented Generation (RAG) visually. Choose between On-Device Local AI (Ollama + Qdrant) or High-Speed Cloud AI (Gemini + Qdrant Cloud)."
+>
+  <!-- Hero Section -->
+  <section class="relative pt-16 pb-20 md:pt-24 md:pb-28 overflow-hidden">
+    <!-- Ambient subtle background glow -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-amber-500/10 via-purple-500/10 to-transparent blur-[120px] pointer-events-none rounded-full"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-4xl mx-auto space-y-6">
+        <!-- Eyebrow -->
+        <SectionEyebrow text="VISUAL RAG ARCHITECTURE PLAYGROUND" class="justify-center" />
+
+        <!-- Display Headline -->
+        <h1 class="heading-display-xl text-white tracking-tight">
+          Demystify <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-white to-purple-300">Retrieval-Augmented</span> Generation
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-lg md:text-xl text-zinc-400 font-normal max-w-2xl mx-auto leading-relaxed">
+          Stop staring at a black-box chatbot. Upload your PDF and inspect every stage: chunking, embedding generation, vector similarity search, and prompt injection.
+        </p>
+
+        <!-- Mode Indicator Pills -->
+        <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+          <StatusBadge status="local" label="Local AI: Ollama + Qdrant" />
+          <StatusBadge status="cloud" label="Cloud AI: Gemini + Qdrant Cloud" />
+        </div>
+      </div>
+
+      <!-- Main Dual Choices Grid -->
+      <div class="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        
+        <!-- CHOICE 1: LOCAL AI CARD -->
+        <div class="group relative bg-[#191919] border border-[#212327] rounded-xl p-8 transition-all duration-300 hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/10 flex flex-col justify-between">
+          <div class="space-y-6">
+            <!-- Header -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a3 3 0 0 0 3 3s2.25 0 3.75 0M15 9.75l1.5-1.5M15 9.75l-1.5-1.5" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-2xl font-normal text-white group-hover:text-amber-200 transition-colors">LOCAL AI</h2>
+                  <p class="font-mono text-xs text-amber-400/90">Ollama + Local Qdrant</p>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-mono bg-amber-500/10 border border-amber-500/30 text-amber-300">
+                100% PRIVATE
+              </span>
+            </div>
+
+            <p class="text-sm text-zinc-300 leading-relaxed">
+              Runs completely on your local workstation. Zero external API calls, maximum data privacy, and full offline operation.
+            </p>
+
+            <!-- Key Specs List -->
+            <div class="space-y-2.5 pt-2">
+              <div class="flex items-center gap-2.5 text-xs text-zinc-300">
+                <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                <span><strong> Answer Model:</strong> Llama 3.1 (via Ollama)</span>
+              </div>
+              <div class="flex items-center gap-2.5 text-xs text-zinc-300">
+                <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                <span><strong> Embedding Model:</strong> Qwen Embedding</span>
+              </div>
+              <div class="flex items-center gap-2.5 text-xs text-zinc-300">
+                <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                <span><strong> Vector Engine:</strong> Qdrant (Docker Container)</span>
+              </div>
+              <div class="flex items-center gap-2.5 text-xs text-zinc-300">
+                <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                <span><strong> Cost:</strong> Free & Unlimited</span>
+              </div>
+            </div>
+
+            <!-- Prerequisites Warning -->
+            <div class="p-3.5 rounded-lg bg-black/40 border border-amber-500/20 text-xs text-amber-200/80 font-mono space-y-1">
+              <div class="font-semibold text-amber-300 flex items-center gap-1.5">
+                <span>⚡ Requires Setup:</span>
+              </div>
+              <p class="text-[11px] text-zinc-400">Docker Desktop + Ollama service installed locally.</p>
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <div class="pt-8">
+            <ButtonPill href="/local" variant="sunset" size="lg" class="w-full">
+              Explore Local AI Flow
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </ButtonPill>
+          </div>
+        </div>
+
+        <!-- CHOICE 2: CLOUD AI CARD -->
+        <div class="group relative bg-[#191919] border border-[#212327] rounded-xl p-8 transition-all duration-300 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/10 flex flex-col justify-between">
+          <div class="space-y-6">
+            <!-- Header -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5h10.5a4.5 4.5 0 0 0 4.5-4.5 drop-shadow-smM15 9.75l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-2xl font-normal text-white group-hover:text-purple-200 transition-colors">CLOUD AI</h2>
+                  <p class="font-mono text-xs text-purple-400/90">Gemini + Qdrant Cloud</p>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-mono bg-purple-500/10 border border-purple-500/30 text-purple-300">
+                ULTRA FAST
+              </span>
+            </div>
+
+            <p class="text-sm text-zinc-300 leading-relaxed">
+              Powered by Google Gemini and managed Qdrant Cloud vector search. Zero local hardware or GPU setup needed.
+            </p>
+
+            <!-- Key Specs List -->
+            <div class="space-y-2.5 pt-2">
+              <div class="flex items-center gap-2.5 text-xs text-zinc-300">
+                <svg class="w-4 h-4 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                <span><strong> Answer Model:</strong> Google Gemini API</span>
+              </div>
+              <div class="flex items-center gap-2.5 text-xs text-zinc-300">
+                <svg class="w-4 h-4 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                <span><strong> Embedding Model:</strong> Gemini Text-Embedding</span>
+              </div>
+              <div class="flex items-center gap-2.5 text-xs text-zinc-300">
+                <svg class="w-4 h-4 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                <span><strong> Vector Engine:</strong> Qdrant Cloud Instance</span>
+              </div>
+              <div class="flex items-center gap-2.5 text-xs text-zinc-300">
+                <svg class="w-4 h-4 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                <span><strong> Performance:</strong> Sub-second Retrieval & Inference</span>
+              </div>
+            </div>
+
+            <!-- Credentials Warning -->
+            <div class="p-3.5 rounded-lg bg-black/40 border border-purple-500/20 text-xs text-purple-200/80 font-mono space-y-1">
+              <div class="font-semibold text-purple-300 flex items-center gap-1.5">
+                <span>🔑 Requires Credentials:</span>
+              </div>
+              <p class="text-[11px] text-zinc-400">Gemini API Key + Qdrant Cloud URL & Key.</p>
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <div class="pt-8">
+            <ButtonPill href="/cloud" variant="dusk" size="lg" class="w-full">
+              Configure Cloud AI Flow
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </ButtonPill>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Side-by-Side Comparison Section -->
+  <section class="py-16 border-t border-[#212327] bg-[#0a0a0a]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+        <SectionEyebrow text="ARCHITECTURE MATRIX" class="justify-center" />
+        <h2 class="heading-display-md text-white">Compare Architectures At A Glance</h2>
+        <p class="text-sm text-zinc-400">Choose the pipeline that fits your privacy requirements and hardware availability.</p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm border-collapse rounded-lg border border-[#212327] overflow-hidden">
+          <thead>
+            <tr class="bg-[#191919] border-b border-[#212327] text-xs font-mono uppercase tracking-wider text-zinc-400">
+              <th class="p-4">Feature</th>
+              <th class="p-4 text-amber-400">Local AI (Ollama + Qdrant)</th>
+              <th class="p-4 text-purple-400">Cloud AI (Gemini + Qdrant Cloud)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#212327] bg-[#121212] text-zinc-300">
+            <tr>
+              <td class="p-4 font-medium text-white">Data Privacy</td>
+              <td class="p-4 text-amber-200">100% On-Device (Zero data leaves RAM)</td>
+              <td class="p-4 text-zinc-400">Processed via Cloud Provider APIs</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium text-white">Prerequisites</td>
+              <td class="p-4">Docker Desktop + Ollama Engine</td>
+              <td class="p-4">Gemini API Key + Qdrant Cloud Key</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium text-white">Hardware Load</td>
+              <td class="p-4">Requires local CPU/GPU & min 8GB RAM</td>
+              <td class="p-4">Zero local load (Runs in Cloud)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium text-white">Vector Storage</td>
+              <td class="p-4 font-mono text-xs">qdrant/qdrant (Local Docker Volume)</td>
+              <td class="p-4 font-mono text-xs">qdrant.tech (Managed Cloud Vector DB)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium text-white">Default LLM</td>
+              <td class="p-4 font-mono text-xs">Llama 3.1 (8B Parameters)</td>
+              <td class="p-4 font-mono text-xs">Gemini 1.5 / 2.0 Flash</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium text-white">Embedding Model</td>
+              <td class="p-4 font-mono text-xs">Qwen Embedding (Dense Vector 1024d)</td>
+              <td class="p-4 font-mono text-xs">text-embedding-004 (1536d)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium text-white">Offline Support</td>
+              <td class="p-4 text-emerald-400">✓ Full Offline Functionality</td>
+              <td class="p-4 text-zinc-500">✗ Requires Active Internet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Educational RAG Visual Timeline Teaser -->
+  <section class="py-20 border-t border-[#212327] bg-[#0d0d0e]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <SectionEyebrow text="LEARN THE RAG PIPELINE" class="justify-center" />
+        <h2 class="heading-display-md text-white">What Happens Behind The Scenes</h2>
+        <p class="text-sm text-zinc-400">
+          Our playground breaks down the complex RAG process into 9 transparent visual stages.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Step 1 -->
+        <Card class="space-y-3">
+          <div class="font-mono text-xs text-amber-400">STAGE 01 - 03</div>
+          <h3 class="text-lg font-medium text-white">Parse & Chunk</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Extract raw text from PDF pages and split document into overlapping chunks (e.g. 500 tokens with 50 token overlap) to preserve semantic context boundaries.
+          </p>
+        </Card>
+
+        <!-- Step 2 -->
+        <Card class="space-y-3">
+          <div class="font-mono text-xs text-purple-400">STAGE 04 - 06</div>
+          <h3 class="text-lg font-medium text-white">Vector Embedding & Storage</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Convert text chunks into mathematical dense vectors using embedding models and store them inside Qdrant vector collections with metadata payloads.
+          </p>
+        </Card>
+
+        <!-- Step 3 -->
+        <Card class="space-y-3">
+          <div class="font-mono text-xs text-emerald-400">STAGE 07 - 09</div>
+          <h3 class="text-lg font-medium text-white">Retrieve & Synthesize</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Query vectors using Cosine Similarity, retrieve exact matching chunks with page numbers, and prompt the LLM to generate cited answers.
+          </p>
+        </Card>
+      </div>
+    </div>
+  </section>
+</Layout>

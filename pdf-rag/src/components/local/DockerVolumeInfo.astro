@@ -1,0 +1,42 @@
+---
+import Card from '../common/Card.astro';
+import SectionEyebrow from '../common/SectionEyebrow.astro';
+---
+
+<section class="space-y-6">
+  <div class="space-y-2">
+    <SectionEyebrow text="STORAGE PERSISTENCE // DOCKER VOLUMES" />
+    <h2 class="heading-display-md text-white">Why Vector Storage Survives Container Restarts</h2>
+    <p class="text-sm text-zinc-400 max-w-3xl">
+      Qdrant runs inside an isolated Docker container. Understanding volume mounting ensures your embedded PDFs are not lost when restarting your machine.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <Card class="space-y-4 bg-[#141416]">
+      <div class="flex items-center gap-2 font-mono text-xs text-blue-400">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+        </svg>
+        DOCKER CONTAINER ISOLATION
+      </div>
+      <h3 class="text-lg font-medium text-white">Why Qdrant Runs Inside Docker</h3>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Qdrant is written in Rust for extreme memory safety and low-latency HNSW vector index lookups. Packaging Qdrant inside a Docker container (`qdrant/qdrant:latest`) guarantees that it runs identically on Windows, macOS, and Linux without complex system dependency conflicts.
+      </p>
+    </Card>
+
+    <Card class="space-y-4 bg-[#141416]">
+      <div class="flex items-center gap-2 font-mono text-xs text-emerald-400">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+        </svg>
+        PERSISTENT DATA VOLUMES
+      </div>
+      <h3 class="text-lg font-medium text-white">Why Persistent Volumes Matter</h3>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        By default, container files are ephemeral. We map a host directory (`./qdrant_storage:/qdrant/storage`) to the container. This ensures all generated vector embeddings, HNSW index graphs, and PDF payload chunks survive container restarts and system reboots.
+      </p>
+    </Card>
+  </div>
+</section>

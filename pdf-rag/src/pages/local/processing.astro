@@ -1,0 +1,391 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionEyebrow from '../../components/common/SectionEyebrow.astro';
+import Card from '../../components/common/Card.astro';
+import ButtonPill from '../../components/common/ButtonPill.astro';
+---
+
+<Layout 
+  title="Visual RAG Indexing Pipeline | 9 Stage Timeline"
+  description="Watch every step of document chunking, dense vector embedding generation, and Qdrant database indexing in real-time."
+>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+    <!-- Header -->
+    <div class="space-y-3 text-center max-w-3xl mx-auto">
+      <SectionEyebrow text="LOCAL PIPELINE // STEP 02" class="justify-center" />
+      <h1 class="heading-display-md text-white">Visual RAG Indexing Pipeline</h1>
+      <p class="text-sm text-zinc-400">
+        Watch how your PDF document is transformed into numerical vector embeddings and indexed in Qdrant.
+      </p>
+    </div>
+
+    <!-- Overall Progress Header Card -->
+    <Card class="p-6 bg-[#18181a] border-amber-500/30 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 w-full md:w-2/3">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span class="text-amber-400 flex items-center gap-2" id="current-stage-label">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            Executing Stage 1 of 9: Reading PDF File Structure
+          </span>
+          <span class="text-white font-bold" id="total-percent-label">11% Complete</span>
+        </div>
+
+        <div class="w-full h-3 rounded-full bg-black/60 overflow-hidden border border-white/10">
+          <div class="h-full bg-gradient-to-r from-amber-500 via-amber-400 to-emerald-400 transition-all duration-300" id="pipeline-progress-bar" style="width: 11%;"></div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center gap-3 shrink-0">
+        <button type="button" id="btn-toggle-play" class="pill-button-outline text-xs">
+          Pause Timeline
+        </button>
+        <button type="button" id="btn-skip-finish" class="pill-button-outline text-xs text-amber-300 border-amber-500/40">
+          Fast-Forward ⚡
+        </button>
+      </div>
+    </Card>
+
+    <!-- 9 Stages Animated Timeline Container -->
+    <div class="space-y-4" id="stages-container">
+      
+      <!-- Stage 1 -->
+      <div class="stage-card p-5 rounded-lg bg-[#121213] border border-[#212327] opacity-60 transition-all duration-300" data-stage="1">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-white/10 stage-badge">
+              01
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-medium text-zinc-300">Reading PDF File Structure</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-500 stage-status-pill">QUEUED</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed stage-desc">
+                The binary file stream is opened using PyMuPDF / PDFMiner parser to extract header metadata, encryption state, and total byte streams.
+              </p>
+            </div>
+          </div>
+          <span class="font-mono text-xs text-zinc-500 shrink-0">~80ms</span>
+        </div>
+      </div>
+
+      <!-- Stage 2 -->
+      <div class="stage-card p-5 rounded-lg bg-[#121213] border border-[#212327] opacity-60 transition-all duration-300" data-stage="2">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-white/10 stage-badge">
+              02
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-medium text-zinc-300">Loading & Extracting Pages</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-500 stage-status-pill">QUEUED</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed stage-desc">
+                Iterates page-by-page through the document, stripping layout artifacts, header margins, footer page numbers, and inline figures.
+              </p>
+            </div>
+          </div>
+          <span class="font-mono text-xs text-zinc-500 shrink-0">~150ms</span>
+        </div>
+      </div>
+
+      <!-- Stage 3 -->
+      <div class="stage-card p-5 rounded-lg bg-[#121213] border border-[#212327] opacity-60 transition-all duration-300" data-stage="3">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-white/10 stage-badge">
+              03
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-medium text-zinc-300">Splitting Document Text</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-500 stage-status-pill">QUEUED</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed stage-desc">
+                Normalizes raw text into clean UTF-8 string paragraphs, preserving line breaks and sentence boundaries for accurate chunking.
+              </p>
+            </div>
+          </div>
+          <span class="font-mono text-xs text-zinc-500 shrink-0">~120ms</span>
+        </div>
+      </div>
+
+      <!-- Stage 4 -->
+      <div class="stage-card p-5 rounded-lg bg-[#121213] border border-[#212327] opacity-60 transition-all duration-300" data-stage="4">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-white/10 stage-badge">
+              04
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-medium text-zinc-300">Creating Overlapping Chunks</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-500 stage-status-pill">QUEUED</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed stage-desc">
+                Sentence-aware semantic splitter creates clean chunks without breaking words in half across section splits.
+              </p>
+            </div>
+          </div>
+          <span class="font-mono text-xs text-zinc-500 shrink-0">~210ms</span>
+        </div>
+      </div>
+
+      <!-- Stage 5 -->
+      <div class="stage-card p-5 rounded-lg bg-[#121213] border border-[#212327] opacity-60 transition-all duration-300" data-stage="5">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-white/10 stage-badge">
+              05
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-medium text-zinc-300">Generating Dense Vector Embeddings</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-500 stage-status-pill">QUEUED</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed stage-desc">
+                Batches text chunks into Ollama's Qwen embedding model endpoint. Each chunk is transformed into a 1024-dimensional floating point dense vector.
+              </p>
+            </div>
+          </div>
+          <span class="font-mono text-xs text-zinc-500 shrink-0">~450ms</span>
+        </div>
+      </div>
+
+      <!-- Stage 6 -->
+      <div class="stage-card p-5 rounded-lg bg-[#121213] border border-[#212327] opacity-60 transition-all duration-300" data-stage="6">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-white/10 stage-badge">
+              06
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-medium text-zinc-300">Connecting to Vector Database</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-500 stage-status-pill">QUEUED</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed stage-desc">
+                Opens gRPC / REST connection to Qdrant engine running on `localhost:6333` and verifies collection schema configuration.
+              </p>
+            </div>
+          </div>
+          <span class="font-mono text-xs text-zinc-500 shrink-0">~40ms</span>
+        </div>
+      </div>
+
+      <!-- Stage 7 -->
+      <div class="stage-card p-5 rounded-lg bg-[#121213] border border-[#212327] opacity-60 transition-all duration-300" data-stage="7">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-white/10 stage-badge">
+              07
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-medium text-zinc-300">Storing Vectors & Payload Metadata</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-500 stage-status-pill">QUEUED</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed stage-desc">
+                Upserts points into Qdrant collection `pdf_rag_local_demo`. Each point includes vector array + payload metadata (page number, chunk ID, text snippet).
+              </p>
+            </div>
+          </div>
+          <span class="font-mono text-xs text-zinc-500 shrink-0">~180ms</span>
+        </div>
+      </div>
+
+      <!-- Stage 8 -->
+      <div class="stage-card p-5 rounded-lg bg-[#121213] border border-[#212327] opacity-60 transition-all duration-300" data-stage="8">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-white/10 stage-badge">
+              08
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-medium text-zinc-300">Finalizing HNSW Graph Index</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-500 stage-status-pill">QUEUED</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed stage-desc">
+                Qdrant constructs the Hierarchical Navigable Small World (HNSW) proximity graph index for sub-millisecond nearest neighbor search.
+              </p>
+            </div>
+          </div>
+          <span class="font-mono text-xs text-zinc-500 shrink-0">~90ms</span>
+        </div>
+      </div>
+
+      <!-- Stage 9 -->
+      <div class="stage-card p-5 rounded-lg bg-[#121213] border border-[#212327] opacity-60 transition-all duration-300" data-stage="9">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-white/10 stage-badge">
+              09
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-medium text-zinc-300">Collection Ready for Question Answering</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-500 stage-status-pill">QUEUED</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed stage-desc">
+                Document vector collection is online and ready to accept user queries for semantic context retrieval.
+              </p>
+            </div>
+          </div>
+          <span class="font-mono text-xs text-zinc-500 shrink-0">~10ms</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Final Action Footer -->
+    <div class="flex items-center justify-between pt-6 border-t border-[#212327]">
+      <ButtonPill href="/local/upload" variant="ghost" size="md">
+        ← Upload Another PDF
+      </ButtonPill>
+
+      <ButtonPill href="/local/chat" variant="primary" size="lg" id="btn-open-chat" class="opacity-50 pointer-events-none transition-opacity">
+        Open Chat & Retrieval Inspector
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+      </ButtonPill>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { fetchPipelineProgress } from '../../utils/api';
+
+  const stageTitles = [
+    "Reading PDF File Structure",
+    "Loading & Extracting Pages",
+    "Splitting Document Text",
+    "Creating Overlapping Chunks",
+    "Generating Dense Vector Embeddings",
+    "Connecting to Vector Database",
+    "Storing Vectors & Payload Metadata",
+    "Finalizing HNSW Graph Index",
+    "Collection Ready for Question Answering"
+  ];
+
+  let currentActiveStage = 1;
+  const totalStages = 9;
+  let isPaused = false;
+
+  const currentStageLabel = document.getElementById('current-stage-label');
+  const totalPercentLabel = document.getElementById('total-percent-label');
+  const progressBar = document.getElementById('pipeline-progress-bar');
+  const btnTogglePlay = document.getElementById('btn-toggle-play');
+  const btnSkipFinish = document.getElementById('btn-skip-finish');
+  const btnOpenChat = document.getElementById('btn-open-chat');
+
+  function renderStageCard(cardEl: Element, state: 'completed' | 'in_progress' | 'queued', descText?: string) {
+    const statusPill = cardEl.querySelector('.stage-status-pill');
+    const badge = cardEl.querySelector('.stage-badge');
+    const title = cardEl.querySelector('h3');
+    const descP = cardEl.querySelector('.stage-desc');
+
+    if (descText && descP) {
+      descP.textContent = descText;
+    }
+
+    if (state === 'completed') {
+      cardEl.className = 'stage-card p-5 rounded-lg bg-[#151a17] border border-emerald-500/40 opacity-100 transition-all duration-300';
+      if (title) title.className = 'text-base font-medium text-white';
+      if (statusPill) {
+        statusPill.className = 'px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300';
+        statusPill.textContent = 'COMPLETED ✓';
+      }
+      if (badge) {
+        badge.className = 'w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-emerald-500/40';
+      }
+    } else if (state === 'in_progress') {
+      cardEl.className = 'stage-card p-5 rounded-lg bg-[#1a1714] border border-amber-500/60 opacity-100 transition-all duration-300';
+      if (title) title.className = 'text-base font-medium text-amber-200';
+      if (statusPill) {
+        statusPill.className = 'px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/20 text-amber-300 animate-pulse';
+        statusPill.textContent = 'IN PROGRESS...';
+      }
+      if (badge) {
+        badge.className = 'w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-amber-500/40';
+      }
+    } else {
+      cardEl.className = 'stage-card p-5 rounded-lg bg-[#121213] border border-[#212327] opacity-60 transition-all duration-300';
+      if (title) title.className = 'text-base font-medium text-zinc-400';
+      if (statusPill) {
+        statusPill.className = 'px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-500';
+        statusPill.textContent = 'QUEUED';
+      }
+      if (badge) {
+        badge.className = 'w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-white/10';
+      }
+    }
+  }
+
+  function setStageProgress(stage: number) {
+    currentActiveStage = stage;
+    const percent = Math.round((stage / totalStages) * 100);
+
+    if (progressBar) progressBar.style.width = `${percent}%`;
+    if (totalPercentLabel) totalPercentLabel.textContent = `${percent}% Complete`;
+
+    const stageCards = document.querySelectorAll('.stage-card');
+
+    stageCards.forEach((cardEl) => {
+      const cardStage = parseInt(cardEl.getAttribute('data-stage') || '0', 10);
+      if (cardStage < stage || stage >= totalStages) {
+        renderStageCard(cardEl, 'completed');
+      } else if (cardStage === stage) {
+        renderStageCard(cardEl, 'in_progress');
+        if (currentStageLabel) {
+          currentStageLabel.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> Stage ${stage} of ${totalStages}: ${stageTitles[stage - 1]}`;
+        }
+      } else {
+        renderStageCard(cardEl, 'queued');
+      }
+    });
+
+    if (stage >= totalStages) {
+      if (currentStageLabel) {
+        currentStageLabel.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> All 9 Pipeline Stages Completed Successfully!`;
+      }
+      if (btnOpenChat) {
+        btnOpenChat.classList.remove('opacity-50', 'pointer-events-none');
+      }
+      if (btnTogglePlay) {
+        btnTogglePlay.textContent = 'Timeline Finished ✓';
+      }
+    }
+  }
+
+  // Pure timer progression for playback
+  let intervalId: any = setInterval(() => {
+    if (!isPaused) {
+      if (currentActiveStage < totalStages) {
+        setStageProgress(currentActiveStage + 1);
+      } else {
+        clearInterval(intervalId);
+      }
+    }
+  }, 600);
+
+  if (btnTogglePlay) {
+    btnTogglePlay.addEventListener('click', () => {
+      isPaused = !isPaused;
+      btnTogglePlay.textContent = isPaused ? 'Resume Timeline' : 'Pause Timeline';
+    });
+  }
+
+  if (btnSkipFinish) {
+    btnSkipFinish.addEventListener('click', () => {
+      clearInterval(intervalId);
+      setStageProgress(9);
+    });
+  }
+
+  // Initial stage 1 update
+  setStageProgress(1);
+</script>
