@@ -130,6 +130,3 @@ Open **`http://localhost:4321`** in your browser!
 
 ---
 
-## 📝 License
-
-Distributed under the MIT License.
