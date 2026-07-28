@@ -1,8 +1,12 @@
 <div align="center">
 
-# 📄 PDF RAG — Visual PDF Retrieval-Augmented Generation Platform
+# 📄 PDF RAG — Advanced Visual PDF Retrieval-Augmented Generation Platform
 
-**A full-stack, dual-mode RAG application to chat with PDF documents locally via Ollama + Qdrant or in the cloud via Google Gemini + Qdrant Cloud.**
+**A full-stack, dual-engine RAG platform to chat with PDF documents locally via Ollama + Qdrant or in the cloud via Google Gemini + Qdrant Cloud.**
+
+Developed by **Shaik Mabhu Subhani**
+
+---
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Astro](https://img.shields.io/badge/Astro-BC52EE?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
@@ -15,16 +19,23 @@
 
 ---
 
-## ✨ Features
+## 🌟 Overview
 
-- ⚡ **Dual RAG Architecture**:
-  - **Local RAG Mode**: 100% offline privacy using Ollama (`llama3.1` + `qwen3-embedding`) & Local Qdrant Docker container.
-  - **Cloud RAG Mode**: Ultra-fast cloud inference using Google Gemini (`text-embedding-004` + `gemini-2.5-flash`) & Qdrant Cloud.
-- 🎯 **LangChain Chunking Engine**: Powered by `RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=300)` for clean, sentence-aware chunk boundaries with zero broken words.
-- 📊 **Visual 9-Stage Indexing Pipeline**: Real-time progress bar and animated status pills tracking every ingestion step from PDF parsing to HNSW graph index construction.
+**PDF RAG** is a production-grade Retrieval-Augmented Generation (RAG) platform designed to ingest PDF documents, parse visual layouts, perform sentence-aware semantic chunking, generate high-dimensional dense vector embeddings, and synthesize accurate, cited answers using AI language models.
+
+The system supports two execution pipelines:
+1. 🏠 **Local PDF RAG (Ollama + Local Qdrant)**: 100% offline privacy using Ollama (`llama3.1:latest` + `qwen3-embedding:0.6b`) & Local Qdrant Docker container on port `6333`.
+2. ☁️ **Cloud PDF RAG (Google Gemini + Qdrant Cloud)**: High-speed cloud inference using Google Gemini (`text-embedding-004` + `gemini-2.5-flash` / `gemini-1.5-flash`) & managed Qdrant Cloud clusters.
+
+---
+
+## 🚀 Key Features
+
+- 🎯 **LangChain Semantic Chunking**: Powered by `RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=300)` for clean, sentence-aware chunk boundaries with zero broken words.
+- 📊 **Visual 9-Stage Indexing Pipeline**: Real-time progress bar and animated status badges tracking every ingestion step from PDF parsing to HNSW graph index construction.
 - 🔍 **Retrieval Chunk Inspector**: Inspect exact retrieved vector passages, page numbers, and cosine similarity scores.
-- 🔒 **Document Payload Filtering**: Qdrant payload filters isolate vector retrieval to the currently active document, preventing cross-document context contamination.
-- 💰 **Bring-Your-Own-Key (BYOK)**: Zero hosting costs for developers—users provide their own free Gemini API key and Qdrant Cloud cluster URL.
+- 🔒 **Document Payload Isolation**: Qdrant payload filters isolate vector retrieval strictly to the currently active document, preventing cross-document context contamination.
+- 💰 **Bring-Your-Own-Key (BYOK)**: Zero hosting costs for developers—users enter their own free Gemini API key and Qdrant Cloud cluster URL.
 
 ---
 
@@ -53,70 +64,72 @@
 
 ---
 
-## 🚀 Quick Start (Running Locally)
+## 🛠️ Tech Stack
 
-### Prerequisites
-- **Python**: 3.12+
-- **Node.js**: 18+
-- **Docker Desktop**: For running local Qdrant container
-- **Ollama**: Running locally with models:
+- **Frontend**: Astro 4, Tailwind CSS 4, TypeScript, HTML5
+- **Backend**: FastAPI, PyMuPDF, LangChain (`langchain-text-splitters`), `pypdf`, `httpx`
+- **Vector Database**: Qdrant Vector Database (Cosine Distance Metric, HNSW Graph Indexing)
+- **AI Models**:
+  - Local Embeddings: `qwen3-embedding:0.6b` (1024d)
+  - Local LLM: `llama3.1:latest`
+  - Cloud Embeddings: `text-embedding-004` (1536d)
+  - Cloud LLM: `gemini-2.5-flash` / `gemini-1.5-flash`
+
+---
+
+## 💻 Quick Start (Running Locally)
+
+### 1. Prerequisites
+- Python 3.12+
+- Node.js 18+
+- Docker Desktop
+- Ollama running locally:
   ```bash
   ollama pull llama3.1:latest
   ollama pull qwen3-embedding:0.6b
   ```
 
----
-
-### 1. Start Qdrant Vector Store Container
-
+### 2. Start Qdrant Vector Store
 ```bash
 docker run -d -p 6333:6333 -p 6334:6334 -v ./qdrant_data:/qdrant/storage --name qdrant qdrant/qdrant:latest
 ```
 
----
-
-### 2. Start FastAPI Backend
-
+### 3. Start Backend Server
 ```bash
 cd backend
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
-- **Backend API**: `http://localhost:8000`
-- **Swagger Documentation**: `http://localhost:8000/docs`
-
----
-
-### 3. Start Astro Frontend
-
+### 4. Start Frontend Website
 ```bash
 cd pdf-rag
 npm install
 npm run dev
 ```
 
-- **Frontend Application**: `http://localhost:4321`
+Open **`http://localhost:4321`** in your browser!
 
 ---
 
-## 📡 REST API Reference
+## 📡 API Endpoints
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `GET` | `/api/v1/health` | System readiness & service status ping |
-| `POST` | `/api/v1/upload` | Parse PDF, create LangChain chunks, generate embeddings & index into Qdrant |
-| `GET` | `/api/v1/pipeline/{job_id}/status` | Poll live 9-stage visual pipeline progress |
-| `POST` | `/api/v1/chat/query` | Execute RAG vector search retrieval & LLM answer synthesis |
+| `GET` | `/api/v1/health` | System health & readiness status |
+| `POST` | `/api/v1/upload` | Parse PDF, create LangChain chunks, embed & index into Qdrant |
+| `GET` | `/api/v1/pipeline/{job_id}/status` | Poll live 9-stage pipeline progress |
+| `POST` | `/api/v1/chat/query` | Perform vector search retrieval & LLM answer synthesis |
 
 ---
 
-## 🌐 Deployment
+## 👤 Author
 
-For complete instructions on deploying to **Vercel**, **Render**, or **Docker Compose**, check out the **[DEPLOYMENT.md](file:///c:/Users/munvar/OneDrive/Desktop/PDF-RAG/DEPLOYMENT.md)** guide.
+**Shaik Mabhu Subhani**  
+- GitHub: [@Mabhusubhani001](https://github.com/Mabhusubhani001)
 
 ---
 
 ## 📝 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License.
